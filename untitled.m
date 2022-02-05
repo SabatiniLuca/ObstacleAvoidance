@@ -1,2 +1,0 @@
-clcl ;
-clear all;
