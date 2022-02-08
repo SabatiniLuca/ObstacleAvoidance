@@ -5,4 +5,4 @@ Body Frame:
 	yB-axis: always points to the right wing.
 	zB-axis: always points down towards the feet of the pilot.
 	
-	
+The velocity of a 
