@@ -12,7 +12,7 @@ w = 2;
 m = 600;
 %% Condizioni operative
 tf = 50;
-N = 1000;
+N = 2000;
 h = tf/N;
 
 % f = @(t, xi) [h*xi(2) + xi(1)
@@ -37,34 +37,46 @@ Phi_fEul  = @(t,y,h) y + h*f(t,y);
 %plot(t,xi_fEul(2,1:N));
 
 %% Definizione funzioni 
-x = 0;
-Vx = 1;
+x = -16100;
+Vx = 6;
 y = 0;
 Vy = 1;
-z = 0;
+z = 3000;
 Vz = 1;
+
+xf = -500;
+yf = 0;
+zf = 0;
 
 
 %% Simulazione numerica
+
 for t = 1:N-1
-    x(t+1) = x(t) + Vx(t)*h;
-    Vx(t+1) = Vx(t)+ h*(2*w*Vz(t));
+        x(t+1) = x(t) + Vx(t)*h;
+        Vx(t+1) = Vx(t)+ h*(Fx/m + 2*w*Vz(t));
 
-    y(t+1) = y(t) + Vy(t)*h;
-    Vy(t+1) = Vy(t) + h*(-w*y(t));
+        y(t+1) = y(t) + Vy(t)*h;
+        Vy(t+1) = Vy(t) + h*(Fy/m - w*y(t));
 
-    z(t+1) = z(t) + Vz(t)*h;
-    Vz(t+1) = Vz(t) + h*(- 2*w*Vx(t) + 3*(w^2)*z(t));
+        z(t+1) = z(t) + Vz(t)*h;
+        Vz(t+1) = Vz(t) + h*(Fz/m - 2*w*Vx(t) + 3*(w^2)*z(t));
 end
+x(N) = -500;
+y(N) = 0;
+z(N) = 0;
 t = linspace(0, tf, N);
 %% Grafica
+tiledlayout(2,2)
+nexttile
+plot(Vx,'k');
+nexttile
+plot(Vz, 'g')
+nexttile([1 2])
 plot3(Vx, Vy, Vz, 'b');
-hold on
-plot3(x,y,z, 'g')
-hold on
-plot3(0,0,0, 'ro')
-hold on 
-plot3(x(N), y(N), z(N), 'ko')
-xlabel('X')
-ylabel('Y')
-zlabel('Z')
+% hold on
+%plot3(x,y,z, 'g')
+% hold on 
+%plot3(x(N), y(N), z(N), 'ro')
+xlabel('Vx')
+ylabel('Vy')
+zlabel('Vz')
