@@ -1,18 +1,12 @@
 clc;clear all;
-% A=[3*(n^2)*x + 2*n*dy;
-%     -2*n*dx;
-%     -(n^2)*z;];
-% V=[int(3*(n^2)*x + 2*n*dy ,x);
-%     int(-2*n*dx ,y);
-%     int(-(n^2)*z ,z);];
-gamma= 3.986e14;%cost grav
-a=400000;%altitudine esemplificativa
-delta=sqrt(gamma/(a^3));
-%posizione iniziale
-P0=0
-% definizione delle equazioni in forma chiusa
 
-QuatPosition= @(P0)   [(4-3*cos(delta))*P0 + (sin(delta)/delta)*diff(P0) + (2/delta)*(1-cos(delta))*diff(P0);];
+% definizione delle equazioni in forma chiusa
+n=sqrt(3.986*exp(14)/500^3);
+P0x=-16000; %16 km condizione iniziale lungo x
+P0y=0;%0 km
+P0z=3000;%3 km
+
+QuatPosition= @(P0)   [(4-3*cos(n*t))*P0 + (sin(delta)/delta)*diff(P0) + (2/delta)*(1-cos(delta))*diff(P0);];
 %                         6*(sin(delta*t)-delta*t)*P0(1,1) + P0(2,1) - (2/delta)*(1-cos(delta*t))*diff(P0(1,1)) + ((4*sin(delta*t)-(3*delta*t))/delta)*diff(P0(2,1));
 %                         P0(3,1)*cos(delta*t) + (diff(P0(3,1))/delta)*sin(delta*t);];
 
@@ -37,4 +31,4 @@ for n=1:N
 %     p_fEul(n+1) = Phi_fEul(p_fEul(n),h);
 %     P0=p_fEul(n+1);
 end
-plot(h*(0:N),p_fEul,'magenta')
+plot(h*(0:N),funz,'g')
